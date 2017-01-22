@@ -9,4 +9,5 @@ matrix:
     - python: "3.6"
       env: TOXENV=py36
 language: python
+install: pip install tox-travis
 script: tox
