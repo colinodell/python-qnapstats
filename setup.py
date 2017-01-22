@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+import io
+
 from setuptools import setup
 
 setup(
     name='qnapstats',
     description='Python API for obtaining QNAP NAS system stats',
+    long_description=io.open('README.rst', encoding='utf-8').read(),
     version='0.1.0',
     license='MIT',
     author='Colin O\'Dell',
