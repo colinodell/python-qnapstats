@@ -1,0 +1,8 @@
+lxml
+requests
+
+flake8
+isort
+pydocstyle
+pylint
+

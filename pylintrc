@@ -1,0 +1,5 @@
+[MASTER]
+extension-pkg-whitelist=lxml
+reports=no
+disable=I
+max-args=6
