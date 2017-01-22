@@ -13,3 +13,13 @@ matrix:
 language: python
 install: pip install tox-travis
 script: tox
+deploy:
+  provider: pypi
+  user: colinodell-auto
+  password:
+    secure: BlyACnKvjLMuSE0xFwvaDszY/l9U0MslIdLEPUAb9+PEUwPoseF4lUzrpqbQLY5pLLXHaP8+tt0rc/Rv58iEy14Egumjx46LTjeI8TzdUCmBsJvo9C6hivwFspxgUeKjnagWGweibcqKGm5+SRR1VG7qMt1jkyeNr0HJ1BOB/bEEAeVTakQt+tiAUTNAup87jT5Rav7IEVIyMUYBobALLuzykqvlxTUtctIW6hDrlieEDR725zVZePs10rYgvscyP2vqFaL7tSAQiHOBuiOoRorWp/MDbxnrl6MPpJ1S73rKU85u3wLBL0Qm7waksqMHvsh8XuRGTk4s/mD+fu/6LqLaUzll4KsHR84mybVhlP71zriVvbB/oBr5ZXfwQEHxaqNf6FsA9hT+b8P8X2971JLoXhiiMmxHKvoF9E+ABMhGrsPfTPwPFFqQ0KnJ1RAoVBNFBhoIEoLnGW3xK+KlqpcRxic+YqDWKsIt05wlNOSvdh+KtQh7rGTnFaha2MGPVKtgvoQW6vhcu/VtuxNEho/FMFzu9/amNCN7Q2biiSwSb7h4MqIXDJYbhg6cb5H0y8qSU8Kekd+QfhK3CXItiO2vfU8casPPosqRrWpfc+SPT5ImAN/UQ4mG/x6zFRKknHPRJtlmG7tqo8IFS602y11DANnwWQkv0I9F8QTyv7o=
+  on:
+    tags: true
+    python: 3.5
+    condition: "$TOXENV != desc"
+  distributions: sdist
