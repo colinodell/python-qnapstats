@@ -1,4 +1,5 @@
-dist
+/build
+/dist
 qnapstats.egg-info
 .tox
 /.idea
