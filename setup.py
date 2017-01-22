@@ -17,7 +17,6 @@ setup(
     packages=['qnapstats'],
     keywords=['qnap'],
     classifiers=[
-        'Home Automation',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: MIT License',
@@ -26,6 +25,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Topic :: Home Automation',
         'Topic :: System :: Monitoring'
     ],
     install_requires=['requests>=1.0.0', 'lxml']
