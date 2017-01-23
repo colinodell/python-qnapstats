@@ -273,8 +273,8 @@ class QNAPStats(object):
             interface = item.xpath("id")[0].text.strip()
             details[interface] = {
                 "name": item.xpath("name")[0].text.strip(),
-                "rx": int(item.xpath("rx")[0].text.strip()),
-                "tx": int(item.xpath("tx")[0].text.strip()),
+                "rx": round(int(item.xpath("rx")[0].text.strip()) / 5),
+                "tx": round(int(item.xpath("tx")[0].text.strip()) / 5),
                 "is_default": interface == default
             }
 
