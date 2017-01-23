@@ -11,8 +11,9 @@ class QNAPStats(object):
 
     def __init__(self, host, port, username, password, debugmode=False):
         """Instantiate a new qnap_stats object."""
+        import base64
         self._username = username
-        self._password = password
+        self._password = base64.b64encode(password.encode('utf-8')).decode('ascii')
 
         self._sid = None
         self._debugmode = debugmode
