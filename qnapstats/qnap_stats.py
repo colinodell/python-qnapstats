@@ -1,6 +1,6 @@
 """Module containing multiple classes to obtain QNAP system stats via cgi calls."""
 # -*- coding:utf-8 -*-
-from lxml import etree
+import xmltodict
 import requests
 
 TIMEOUT = 5
@@ -56,7 +56,7 @@ class QNAPStats(object):
         if result is None:
             return False
 
-        self._sid = result.xpath("authSid")[0].text.strip()
+        self._sid = result["authSid"]
         return True
 
     def _get_url(self, url, retry_on_error=True):
@@ -104,14 +104,14 @@ class QNAPStats(object):
             # JSON requests not currently supported
             return None
 
-        xml = etree.fromstring(resp.content)
+        data = xmltodict.parse(resp.content)['QDocRoot']
 
-        auth_passed = xml.xpath('authPassed')
-        if auth_passed is not None and len(auth_passed) == 1 and auth_passed[0].text.strip() == "0":
+        auth_passed = data['authPassed']
+        if auth_passed is not None and len(auth_passed) == 1 and auth_passed == "0":
             self._session_error = True
             return None
 
-        return xml
+        return data
 
     def get_system_health(self):
         """Obtain the system's overall health."""
@@ -137,9 +137,9 @@ class QNAPStats(object):
         volumes = {}
         id_map = {}
 
-        for vol in resp.xpath("volumeList/volume"):
-            key = vol.xpath("volumeValue")[0].text.strip()
-            label = vol.xpath("volumeLabel")[0].text.strip()
+        for vol in resp["volumeList"]["volume"]:
+            key = vol["volumeValue"]
+            label = vol["volumeLabel"]
 
             volumes[label] = {
                 "id": key,
@@ -148,8 +148,8 @@ class QNAPStats(object):
 
             id_map[key] = label
 
-        for vol in resp.xpath("volumeUseList/volumeUse"):
-            id_number = vol.xpath("volumeValue")[0].text.strip()
+        for vol in resp["volumeUseList"]["volumeUse"]:
+            id_number = vol["volumeValue"]
 
             # Skip any system reserved volumes
             if id_number not in id_map.keys():
@@ -157,15 +157,15 @@ class QNAPStats(object):
 
             key = id_map[id_number]
 
-            volumes[key]["free_size"] = int(vol.xpath("free_size")[0].text.strip())
-            volumes[key]["total_size"] = int(vol.xpath("total_size")[0].text.strip())
+            volumes[key]["free_size"] = int(vol["free_size"])
+            volumes[key]["total_size"] = int(vol["total_size"])
 
-            folder_elements = vol.xpath("folder_element")
+            folder_elements = vol["folder_element"]
             if len(folder_elements) > 0:
                 volumes[key]["folders"] = []
                 for folder in folder_elements:
-                    sharename = folder.xpath("sharename")[0].text.strip()
-                    used_size = int(folder.xpath("used_size")[0].text.strip())
+                    sharename = folder["sharename"]
+                    used_size = int(folder["used_size"])
                     volumes[key]["folders"].append({"sharename": sharename, "used_size": used_size})
 
         return volumes
@@ -178,16 +178,16 @@ class QNAPStats(object):
             return None
 
         disks = []
-        for disk in resp.xpath("Disk_Info/entry"):
+        for disk in resp["Disk_Info"]["entry"]:
             disks.append({
-                "drive_number": disk.xpath("HDNo")[0].text.strip(),
-                "health": disk.xpath("Health")[0].text.strip(),
-                "temp_c": int(disk.xpath("Temperature/oC")[0].text.strip()),
-                "temp_f": int(disk.xpath("Temperature/oF")[0].text.strip()),
-                "capacity": disk.xpath("Capacity")[0].text.strip(),
-                "model": disk.xpath("Model")[0].text.strip(),
-                "serial": disk.xpath("Serial")[0].text.strip(),
-                "type": "hdd" if int(disk.xpath("hd_is_ssd")[0].text.strip()) == 0 else "ssd",
+                "drive_number": disk["HDNo"],
+                "health": disk["Health"],
+                "temp_c": int(disk["Temperature"]["oC"]),
+                "temp_f": int(disk["Temperature"]["oF"]),
+                "capacity": disk["Capacity"],
+                "model": disk["Model"],
+                "serial": disk["Serial"],
+                "type": "hdd" if int(disk["hd_is_ssd"]) == 0 else "ssd",
             })
 
         return disks
@@ -199,62 +199,62 @@ class QNAPStats(object):
         if resp is None:
             return None
 
-        root = resp.xpath("func/ownContent/root")[0]
+        root = resp["func"]["ownContent"]["root"]
 
         details = {
             "system": {
-                "name": root.xpath("server_name")[0].text.strip(),
-                "model": resp.xpath("model/displayModelName")[0].text.strip(),
-                "serial_number": root.xpath("serial_number")[0].text.strip(),
-                "temp_c": int(root.xpath("sys_tempc")[0].text.strip()),
-                "temp_f": int(root.xpath("sys_tempf")[0].text.strip()),
-                "timezone": root.xpath("timezone")[0].text.strip(),
+                "name": root["server_name"],
+                "model": resp["model"]["displayModelName"],
+                "serial_number": root["serial_number"],
+                "temp_c": int(root["sys_tempc"]),
+                "temp_f": int(root["sys_tempf"]),
+                "timezone": root["timezone"],
             },
             "firmware": {
-                "version": resp.xpath("firmware/version")[0].text.strip(),
-                "build": resp.xpath("firmware/build")[0].text.strip(),
-                "patch": resp.xpath("firmware/patch")[0].text.strip(),
-                "build_time": resp.xpath("firmware/buildTime")[0].text.strip(),
+                "version": resp["firmware"]["version"],
+                "build": resp["firmware"]["build"],
+                "patch": resp["firmware"]["patch"],
+                "build_time": resp["firmware"]["buildTime"],
             },
             "uptime": {
-                "days": int(root.xpath("uptime_day")[0].text.strip()),
-                "hours": int(root.xpath("uptime_hour")[0].text.strip()),
-                "minutes": int(root.xpath("uptime_min")[0].text.strip()),
-                "seconds": int(root.xpath("uptime_sec")[0].text.strip()),
+                "days": int(root["uptime_day"]),
+                "hours": int(root["uptime_hour"]),
+                "minutes": int(root["uptime_min"]),
+                "seconds": int(root["uptime_sec"]),
             },
             "cpu": {
-                "model": root.xpath("cpu_model")[0].text.strip(),
-                "usage_percent": float(root.xpath("cpu_usage")[0].text.replace("%", "").strip()),
-                "temp_c": int(root.xpath("cpu_tempc")[0].text.strip()),
-                "temp_f": int(root.xpath("cpu_tempf")[0].text.strip()),
+                "model": root["cpu_model"],
+                "usage_percent": float(root["cpu_usage"].replace("%", "")),
+                "temp_c": int(root["cpu_tempc"]),
+                "temp_f": int(root["cpu_tempf"]),
             },
             "memory": {
-                "total": float(root.xpath("total_memory")[0].text.strip()),
-                "free": float(root.xpath("free_memory")[0].text.strip()),
+                "total": float(root["total_memory"]),
+                "free": float(root["free_memory"]),
             },
             "nics": {},
             "dns": [],
         }
 
-        nic_count = int(root.xpath("nic_cnt")[0].text.strip())
+        nic_count = int(root["nic_cnt"])
         for nic_index in range(nic_count):
             i = str(nic_index + 1)
             interface = "eth" + str(nic_index)
-            status = root.xpath("eth_status" + i)[0].text.strip()
+            status = root["eth_status" + i]
             details["nics"][interface] = {
                 "link_status": "Up" if status == "1" else "Down",
-                "max_speed": int(root.xpath("eth_max_speed" + i)[0].text.strip()),
-                "ip": root.xpath("eth_ip" + i)[0].text.strip(),
-                "mask": root.xpath("eth_mask" + i)[0].text.strip(),
-                "mac": root.xpath("eth_mac" + i)[0].text.strip(),
-                "usage": root.xpath("eth_usage" + i)[0].text.strip(),
-                "rx_packets": int(root.xpath("rx_packet" + i)[0].text.strip()),
-                "tx_packets": int(root.xpath("tx_packet" + i)[0].text.strip()),
-                "err_packets": int(root.xpath("err_packet" + i)[0].text.strip())
+                "max_speed": int(root["eth_max_speed" + i]),
+                "ip": root["eth_ip" + i],
+                "mask": root["eth_mask" + i],
+                "mac": root["eth_mac" + i],
+                "usage": root["eth_usage" + i],
+                "rx_packets": int(root["rx_packet" + i]),
+                "tx_packets": int(root["tx_packet" + i]),
+                "err_packets": int(root["err_packet" + i])
             }
 
-        for dns in root.xpath("dnsInfo/DNS_LIST"):
-            details["dns"].append(dns.text.strip())
+        for dns in root["dnsInfo"]["DNS_LIST"]:
+            details["dns"].append(dns)
 
         return details
 
@@ -267,14 +267,14 @@ class QNAPStats(object):
 
         details = {}
 
-        default = resp.xpath("bandwidth_info/df_gateway")[0].text.strip()
+        default = resp["bandwidth_info"]["df_gateway"]
 
-        for item in resp.xpath("bandwidth_info/item"):
-            interface = item.xpath("id")[0].text.strip()
+        for item in resp["bandwidth_info"]["item"]:
+            interface = item["id"]
             details[interface] = {
-                "name": item.xpath("name")[0].text.strip(),
-                "rx": round(int(item.xpath("rx")[0].text.strip()) / 5),
-                "tx": round(int(item.xpath("tx")[0].text.strip()) / 5),
+                "name": item["name"],
+                "rx": round(int(item["rx"]) / 5),
+                "tx": round(int(item["tx"]) / 5),
                 "is_default": interface == default
             }
 

@@ -28,5 +28,5 @@ setup(
         'Topic :: Home Automation',
         'Topic :: System :: Monitoring'
     ],
-    install_requires=['requests>=1.0.0']
+    install_requires=['requests>=1.0.0', 'xmltodict>=0.10.0']
 )

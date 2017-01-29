@@ -1,5 +1,5 @@
-lxml
 requests
+xmltodict>=0.10.0
 
 flake8
 isort

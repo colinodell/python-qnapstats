@@ -11,21 +11,17 @@ Library from obtaining system information from QNAP NAS devices.
 Installation
 ============
 
-This library requires `libxml`, so make sure you have that installed:
+This library requires `xmltodict`, so make sure you have that installed:
 
 .. code-block:: bash
 
-    # Installing via apt:
-    apt install libxml2-dev
+    pip3 install xmltodict>=0.10.0
 
-    # Installing via yum:
-    yum install libxml2-devel
-
-Install this Python module:
+Then install this Python module:
 
 .. code-block:: bash
 
-    pip install qnapstats
+    pip3 install qnapstats
 
 Usage Example
 =============
