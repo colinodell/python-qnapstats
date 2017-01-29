@@ -178,9 +178,9 @@ class QNAPStats(object):
         if resp is None:
             return None
 
-        disks = []
+        disks = {}
         for disk in resp["Disk_Info"]["entry"]:
-            disks.append({
+            disks[disk["HDNo"]] = {
                 "drive_number": disk["HDNo"],
                 "health": disk["Health"],
                 "temp_c": int(disk["Temperature"]["oC"]),
@@ -189,7 +189,7 @@ class QNAPStats(object):
                 "model": disk["Model"],
                 "serial": disk["Serial"],
                 "type": "hdd" if int(disk["hd_is_ssd"]) == 0 else "ssd",
-            })
+            }
 
         return disks
 
