@@ -59,18 +59,18 @@ class QNAPStats(object):
         self._sid = result["authSid"]
         return True
 
-    def _get_url(self, url, retry_on_error=True):
+    def _get_url(self, url, retry_on_error=True, **kwargs):
         """High-level function for making GET requests."""
         self._init_session()
 
-        result = self._execute_get_url(url)
+        result = self._execute_get_url(url, **kwargs)
         if (self._session_error or result is None) and retry_on_error:
             self._debuglog("Error occured, retrying...")
-            self._get_url(url, False)
+            self._get_url(url, False, **kwargs)
 
         return result
 
-    def _execute_get_url(self, url, append_sid=True):
+    def _execute_get_url(self, url, append_sid=True, **kwargs):
         """Low-level function to execute a GET request."""
         url = self._base_url + url
         self._debuglog("GET from URL: " + url)
@@ -80,9 +80,9 @@ class QNAPStats(object):
             url = "%s&sid=%s" % (url, self._sid)
 
         resp = self._session.get(url, timeout=TIMEOUT)
-        return self._handle_response(resp)
+        return self._handle_response(resp, **kwargs)
 
-    def _execute_post_url(self, url, data, append_sid=True):
+    def _execute_post_url(self, url, data, append_sid=True, **kwargs):
         """Low-level function to execute a POST request."""
         url = self._base_url + url
         self._debuglog("POST to URL: " + url)
@@ -92,9 +92,9 @@ class QNAPStats(object):
             data["sid"] = self._sid
 
         resp = self._session.post(url, data, timeout=TIMEOUT)
-        return self._handle_response(resp)
+        return self._handle_response(resp, **kwargs)
 
-    def _handle_response(self, resp):
+    def _handle_response(self, resp, force_list=None):
         """Ensure response is successful and return body as XML."""
         self._debuglog("Request executed: " + str(resp.status_code))
         if resp.status_code != 200:
@@ -104,7 +104,7 @@ class QNAPStats(object):
             # JSON requests not currently supported
             return None
 
-        data = xmltodict.parse(resp.content)['QDocRoot']
+        data = xmltodict.parse(resp.content, force_list=force_list)['QDocRoot']
 
         auth_passed = data['authPassed']
         if auth_passed is not None and len(auth_passed) == 1 and auth_passed == "0":
@@ -119,17 +119,18 @@ class QNAPStats(object):
         if resp is None:
             return None
 
-        status = resp.xpath("func/ownContent/sysHealth/status")
+        status = resp["func"]["ownContent"]["sysHealth"]["status"]
         if status is None or len(status) == 0:
             return None
 
-        return status[0].text.strip()
+        return status
 
     def get_volumes(self):
         """Obtain information about volumes and shared directories."""
-        # pylint: disable=line-too-long
-        resp = self._get_url("management/chartReq.cgi?chart_func=disk_usage&disk_select=all&include=all")
-        # pylint: enable=line-too-long
+        resp = self._get_url(
+            "management/chartReq.cgi?chart_func=disk_usage&disk_select=all&include=all",
+            force_list=("volume", "volumeUse", "folder_element")
+        )
 
         if resp is None:
             return None
@@ -172,7 +173,7 @@ class QNAPStats(object):
 
     def get_smart_disk_health(self):
         """Obtain SMART information about each disk."""
-        resp = self._get_url("disk/qsmart.cgi?func=all_hd_data")
+        resp = self._get_url("disk/qsmart.cgi?func=all_hd_data", force_list=("Entry"))
 
         if resp is None:
             return None
@@ -194,7 +195,10 @@ class QNAPStats(object):
 
     def get_system_stats(self):
         """Obtain core system information and resource utilization."""
-        resp = self._get_url("management/manaRequest.cgi?subfunc=sysinfo&hd=no&multicpu=1")
+        resp = self._get_url(
+            "management/manaRequest.cgi?subfunc=sysinfo&hd=no&multicpu=1",
+            force_list=("DNS_LIST")
+        )
 
         if resp is None:
             return None
@@ -260,7 +264,10 @@ class QNAPStats(object):
 
     def get_bandwidth(self):
         """Obtain the current bandwidth usage speeds."""
-        resp = self._get_url("management/chartReq.cgi?chart_func=QSM40bandwidth")
+        resp = self._get_url(
+            "management/chartReq.cgi?chart_func=QSM40bandwidth",
+            force_list=("item")
+        )
 
         if resp is None:
             return None
