@@ -21,7 +21,7 @@ class QNAPStats(object):
         self._session_error = False
         self._session = None  # type: requests.Session
 
-        if not host.startswith("http://") or host.startswith("https://"):
+        if not (host.startswith("http://") or host.startswith("https://")):
             host = "http://" + host
 
         self._base_url = '%s:%s/cgi-bin/' % (host, port)
