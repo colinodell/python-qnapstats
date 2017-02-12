@@ -91,7 +91,7 @@ class QNAPStats(object):
             self._debuglog("Appending access_token (SID: " + self._sid + ") to url")
             data["sid"] = self._sid
 
-        resp = self._session.post(url, data, timeout=TIMEOUT)
+        resp = self._session.post(url, data, timeout=TIMEOUT, verify=False)
         return self._handle_response(resp, **kwargs)
 
     def _handle_response(self, resp, force_list=None):
