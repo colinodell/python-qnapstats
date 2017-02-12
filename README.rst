@@ -43,5 +43,12 @@ Usage Example
 Device Support
 ==============
 
-This library has been tested against the latest QTS 4.2.2 firmware on a QNAP TS-451.  Other devices using this firmware should work fine.
+This library has been tested against the following devices and firmwares:
+
+| Model | QTS Firmware Versions |
+|---|---|
+| TS-451 | 4.2.2, 4.2.3 |
+| TS-639 | 4.2.3 |
+
+Other devices using these firmwares should probably work fine.
 If you encounter any compatibility issues, please let us know (or better yet, contribute a patch!)
