@@ -1,6 +1,7 @@
 requests
 xmltodict>=0.10.0
 
+responses>=0.5.1
 flake8
 isort
 pydocstyle
