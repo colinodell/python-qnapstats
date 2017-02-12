@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<QDocRoot version="1.0">
+<authPassed><![CDATA[1]]></authPassed><model><modelName><![CDATA[TS-X51]]></modelName><internalModelName><![CDATA[TS-X51]]></internalModelName><platform><![CDATA[TS-NASX86]]></platform><customModelName><![CDATA[]]></customModelName><displayModelName><![CDATA[TS-451]]></displayModelName><sas_model><![CDATA[0]]></sas_model><storage_v2>1</storage_v2>
+<encryptfsSupported><![CDATA[1]]></encryptfsSupported></model>
+<firmware><version><![CDATA[4.2.2]]></version><build><![CDATA[20161208]]></build><patch><![CDATA[0]]></patch><buildTime><![CDATA[2016/12/08]]></buildTime></firmware>
+<specVersion><![CDATA[1.0]]></specVersion><hostname><![CDATA[Apollo]]></hostname><DemoSiteSuppurt><![CDATA[no]]></DemoSiteSuppurt><customLogo><customFrontLogo><![CDATA[]]></customFrontLogo><customLoginLogo><![CDATA[]]></customLoginLogo></customLogo>
+<bandwidth_info><df_gateway><![CDATA[eth1]]></df_gateway><item><id><![CDATA[eth0]]></id><name><![CDATA[LAN 1]]></name><rx><![CDATA[53661]]></rx><tx><![CDATA[1728851]]></tx></item>
+<item><id><![CDATA[eth1]]></id><name><![CDATA[LAN 2]]></name><rx><![CDATA[17969]]></rx><tx><![CDATA[25259]]></tx></item>
+</bandwidth_info>
+</QDocRoot>

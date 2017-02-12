@@ -1,0 +1,1 @@
+{"eth0": {"is_default": false, "name": "LAN 1", "rx": 10732, "tx": 345770}, "eth1": {"is_default": true, "name": "LAN 2", "rx": 3594, "tx": 5052}}
