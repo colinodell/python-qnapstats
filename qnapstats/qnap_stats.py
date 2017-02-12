@@ -193,7 +193,7 @@ class QNAPStats(object):
                   "capacity": disk["Capacity"],
                   "model": disk["Model"],
                   "serial": disk["Serial"],
-                  "type": "hdd" if int(disk["hd_is_ssd"]) == 0 else "ssd",
+                  "type": "ssd" if "hd_is_ssd" in disk else "hdd",
               }
 
         return disks
