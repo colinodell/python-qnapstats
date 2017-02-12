@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<QDocRoot version="1.0">
+<authPassed><![CDATA[1]]></authPassed><model><modelName><![CDATA[TS-X51]]></modelName><internalModelName><![CDATA[TS-X51]]></internalModelName><platform><![CDATA[TS-NASX86]]></platform><customModelName><![CDATA[]]></customModelName><displayModelName><![CDATA[TS-451]]></displayModelName><sas_model><![CDATA[0]]></sas_model><storage_v2>1</storage_v2>
+<encryptfsSupported><![CDATA[1]]></encryptfsSupported></model>
+<firmware><version><![CDATA[4.2.2]]></version><build><![CDATA[20161208]]></build><patch><![CDATA[0]]></patch><buildTime><![CDATA[2016/12/08]]></buildTime></firmware>
+<specVersion><![CDATA[1.0]]></specVersion><hostname><![CDATA[Apollo]]></hostname><DemoSiteSuppurt><![CDATA[no]]></DemoSiteSuppurt><customLogo><customFrontLogo><![CDATA[]]></customFrontLogo><customLoginLogo><![CDATA[]]></customLoginLogo></customLogo>
+<volumeList><volume><volumeStat><![CDATA[raid5]]></volumeStat><volumeDisks><![CDATA[ 1,2,3]]></volumeDisks><volumeStatus><![CDATA[0]]></volumeStatus><Progress><![CDATA[100]]></Progress><volumeValue><![CDATA[1]]></volumeValue><freeSize><![CDATA[804]]></freeSize><fstype><![CDATA[9]]></fstype><volumeLabel><![CDATA[DataVol1]]></volumeLabel><FSRVP_support><![CDATA[0]]></FSRVP_support><FolderCounter><![CDATA[10]]></FolderCounter><is_legacy_volume><![CDATA[0]]></is_legacy_volume><is_default_volume><![CDATA[1]]></is_default_volume><pool_vjbod><![CDATA[0]]></pool_vjbod></volume>
+</volumeList>
+<volumeUseList><volumeUse><volumeValue><![CDATA[1]]></volumeValue><total_size><![CDATA[5934928510976]]></total_size><free_size><![CDATA[865955594240]]></free_size><folder_element><sharename><![CDATA[Multimedia]]></sharename><used_size><![CDATA[602112]]></used_size></folder_element>
+<folder_element><sharename><![CDATA[Download]]></sharename><used_size><![CDATA[264058204160]]></used_size></folder_element>
+<folder_element><sharename><![CDATA[Recordings]]></sharename><used_size><![CDATA[4096]]></used_size></folder_element>
+<folder_element><sharename><![CDATA[Web]]></sharename><used_size><![CDATA[8192]]></used_size></folder_element>
+<folder_element><sharename><![CDATA[Public]]></sharename><used_size><![CDATA[4096]]></used_size></folder_element>
+<folder_element><sharename><![CDATA[homes]]></sharename><used_size><![CDATA[90112]]></used_size></folder_element>
+<folder_element><sharename><![CDATA[TmpRestore]]></sharename><used_size><![CDATA[0]]></used_size></folder_element>
+<folder_element><sharename><![CDATA[Shared]]></sharename><used_size><![CDATA[4770844930048]]></used_size></folder_element>
+<folder_element><sharename><![CDATA[Containers]]></sharename><used_size><![CDATA[8080171008]]></used_size></folder_element>
+<folder_element><sharename><![CDATA[IncomingBackups]]></sharename><used_size><![CDATA[126976]]></used_size></folder_element>
+<folder_element><sharename><![CDATA[System Reserved]]></sharename><used_size><![CDATA[25579089920]]></used_size><type><![CDATA[system]]></type></folder_element>
+<others_size><![CDATA[5042984140800]]></others_size><found_quota><![CDATA[0]]></found_quota></volumeUse>
+<volumeUse><volumeValue><![CDATA[2]]></volumeValue><total_size><![CDATA[0]]></total_size><free_size><![CDATA[0]]></free_size><folder_element></folder_element>
+<folder_element><sharename><![CDATA[System Reserved]]></sharename><used_size><![CDATA[0]]></used_size><type><![CDATA[system]]></type></folder_element>
+<found_quota><![CDATA[0]]></found_quota></volumeUse>
+</volumeUseList>
+</QDocRoot>
