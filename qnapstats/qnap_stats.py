@@ -144,7 +144,7 @@ class QNAPStats(object):
 
         for vol in resp["volumeList"]["volume"]:
             key = vol["volumeValue"]
-            label = vol["volumeLabel"]
+            label = vol["volumeLabel"] if "volumeLabel" in vol else "Disk(s): " + vol["volumeDisks"]
 
             volumes[label] = {
                 "id": key,
