@@ -9,7 +9,7 @@ TIMEOUT = 5
 class QNAPStats(object):
     """Class containing the main functions."""
 
-    def __init__(self, host, port, username, password, debugmode=False):
+    def __init__(self, host, port, username, password, debugmode=False, verify_ssl=True):
         """Instantiate a new qnap_stats object."""
         import base64
         self._username = username
@@ -23,6 +23,8 @@ class QNAPStats(object):
 
         if not (host.startswith("http://") or host.startswith("https://")):
             host = "http://" + host
+
+        self._verify_ssl = verify_ssl
 
         self._base_url = '%s:%s/cgi-bin/' % (host, port)
 
@@ -79,7 +81,7 @@ class QNAPStats(object):
             self._debuglog("Appending access_token (SID: " + self._sid + ") to url")
             url = "%s&sid=%s" % (url, self._sid)
 
-        resp = self._session.get(url, timeout=TIMEOUT)
+        resp = self._session.get(url, timeout=TIMEOUT, verify=self._verify_ssl)
         return self._handle_response(resp, **kwargs)
 
     def _execute_post_url(self, url, data, append_sid=True, **kwargs):
@@ -91,7 +93,7 @@ class QNAPStats(object):
             self._debuglog("Appending access_token (SID: " + self._sid + ") to url")
             data["sid"] = self._sid
 
-        resp = self._session.post(url, data, timeout=TIMEOUT)
+        resp = self._session.post(url, data, timeout=TIMEOUT, verify=self._verify_ssl)
         return self._handle_response(resp, **kwargs)
 
     def _handle_response(self, resp, force_list=None):
