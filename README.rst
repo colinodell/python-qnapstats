@@ -28,7 +28,8 @@ Usage Example
 
 .. code-block:: python
 
-    from from qnapstats import QNAPStats
+    #!/usr/bin/env python3
+    from qnapstats import QNAPStats
     from pprint import pprint
     
     qnap = QNAPStats('192.168.1.3', 8080, 'admin', 'correcthorsebatterystaple')
