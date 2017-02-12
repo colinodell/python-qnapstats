@@ -227,7 +227,7 @@ class QNAPStats(object):
                 "seconds": int(root["uptime_sec"]),
             },
             "cpu": {
-                "model": root["cpu_model"],
+                "model": root["cpu_model"] if "cpu_model" in root else None,
                 "usage_percent": float(root["cpu_usage"].replace("%", "")),
                 "temp_c": int(root["cpu_tempc"]),
                 "temp_f": int(root["cpu_tempf"]),
