@@ -6,9 +6,11 @@ import requests
 TIMEOUT = 5
 
 
+# pylint: disable=too-many-instance-attributes
 class QNAPStats(object):
     """Class containing the main functions."""
 
+    # pylint: disable=too-many-arguments
     def __init__(self, host, port, username, password, debugmode=False, verify_ssl=True):
         """Instantiate a new qnap_stats object."""
         import base64
