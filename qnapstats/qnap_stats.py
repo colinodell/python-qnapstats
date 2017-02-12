@@ -107,7 +107,7 @@ class QNAPStats(object):
         if resp.headers["Content-Type"] != "text/xml":
             # JSON requests not currently supported
             return None
-
+        self._debuglog("Response Text: " + resp.text)
         data = xmltodict.parse(resp.content, force_list=force_list)['QDocRoot']
 
         auth_passed = data['authPassed']
