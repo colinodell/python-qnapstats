@@ -185,16 +185,16 @@ class QNAPStats(object):
         disks = {}
         for disk in resp["Disk_Info"]["entry"]:
             if disk["Model"]:
-              disks[disk["HDNo"]] = {
-                  "drive_number": disk["HDNo"],
-                  "health": disk["Health"],
-                  "temp_c": int(disk["Temperature"]["oC"]),
-                  "temp_f": int(disk["Temperature"]["oF"]),
-                  "capacity": disk["Capacity"],
-                  "model": disk["Model"],
-                  "serial": disk["Serial"],
-                  "type": "ssd" if ("hd_is_ssd" in disk and int(disk["hd_is_ssd"])) else "hdd",
-              }
+                disks[disk["HDNo"]] = {
+                    "drive_number": disk["HDNo"],
+                    "health": disk["Health"],
+                    "temp_c": int(disk["Temperature"]["oC"]),
+                    "temp_f": int(disk["Temperature"]["oF"]),
+                    "capacity": disk["Capacity"],
+                    "model": disk["Model"],
+                    "serial": disk["Serial"],
+                    "type": "ssd" if ("hd_is_ssd" in disk and int(disk["hd_is_ssd"])) else "hdd",
+                }
 
         return disks
 
