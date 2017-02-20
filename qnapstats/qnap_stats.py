@@ -195,7 +195,7 @@ class QNAPStats(object):
                     "serial": disk["Serial"],
                     "type": "ssd" if ("hd_is_ssd" in disk and int(disk["hd_is_ssd"])) else "hdd",
                 }
-                
+
         return disks
 
     def get_system_stats(self):
