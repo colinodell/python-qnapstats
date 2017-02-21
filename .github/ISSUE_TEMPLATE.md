@@ -1,0 +1,13 @@
+Please provide the following information along with your issue report:
+
+**Device Model Number**: <TS-451>
+
+**QTS Version**: <4.2.3>
+
+If you're reporting a `KeyError`, please also provide the XML response from your QNAP device.  You can easily obtain this by running the `debug.py` script.
+
+**XML:**
+
+~~~xml
+<!-- Insert XML here -->
+~~~
