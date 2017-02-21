@@ -1,4 +1,5 @@
 import getpass
+import traceback
 import qnapstats
 
 host = input("Host (prefix with 'https://' if needed): ")
@@ -11,24 +12,24 @@ qnap = qnapstats.QNAPStats(host, port, username, password, debugmode=True, verif
 try:
     qnap.get_system_stats()
 except:
-    pass
+    traceback.print_exc()
 
 try:
     qnap.get_system_health()
 except:
-    pass
+    traceback.print_exc()
 
 try:
     qnap.get_smart_disk_health()
 except:
-    pass
+    traceback.print_exc()
 
 try:
     qnap.get_volumes()
 except:
-    pass
+    traceback.print_exc()
 
 try:
     qnap.get_bandwidth()
 except:
-    pass
+    traceback.print_exc()
