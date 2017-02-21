@@ -1,4 +1,4 @@
-Please provide the following information along with your issue report:
+Please provide the following information along with your issue report (replace anything inside of `<>`):
 
 **Device Model Number**: <TS-451>
 
