@@ -6,8 +6,8 @@ Please provide the following information along with your issue report (replace a
 
 If you're reporting a `KeyError`, please also provide the XML response from your QNAP device.  You can easily obtain this by running the `debug.py` script.
 
-**XML:**
+**XML/Debug Output:**
 
-~~~xml
-<!-- Insert XML here -->
+~~~
+<Insert your XML or debug output here>
 ~~~
