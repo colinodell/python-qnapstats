@@ -234,8 +234,8 @@ class QNAPStats(object):
             "cpu": {
                 "model": root["cpu_model"] if "cpu_model" in root else None,
                 "usage_percent": float(root["cpu_usage"].replace("%", "")),
-                "temp_c": int(root["cpu_tempc"]),
-                "temp_f": int(root["cpu_tempf"]),
+                "temp_c": int(root["cpu_tempc"]) if "cpu_tempc" in root else None,
+                "temp_f": int(root["cpu_tempf"]) if "cpu_tempf" in root else None,
             },
             "memory": {
                 "total": float(root["total_memory"]),
