@@ -3,15 +3,13 @@
 import xmltodict
 import requests
 
-TIMEOUT = 5
-
 
 # pylint: disable=too-many-instance-attributes
 class QNAPStats(object):
     """Class containing the main functions."""
 
     # pylint: disable=too-many-arguments
-    def __init__(self, host, port, username, password, debugmode=False, verify_ssl=True):
+    def __init__(self, host, port, username, password, debugmode=False, verify_ssl=True, timeout=5):
         """Instantiate a new qnap_stats object."""
         import base64
         self._username = username
@@ -27,6 +25,7 @@ class QNAPStats(object):
             host = "http://" + host
 
         self._verify_ssl = verify_ssl
+        self._timeout = timeout
 
         self._base_url = '%s:%s/cgi-bin/' % (host, port)
 
@@ -83,7 +82,7 @@ class QNAPStats(object):
             self._debuglog("Appending access_token (SID: " + self._sid + ") to url")
             url = "%s&sid=%s" % (url, self._sid)
 
-        resp = self._session.get(url, timeout=TIMEOUT, verify=self._verify_ssl)
+        resp = self._session.get(url, timeout=self._timeout, verify=self._verify_ssl)
         return self._handle_response(resp, **kwargs)
 
     def _execute_post_url(self, url, data, append_sid=True, **kwargs):
@@ -95,7 +94,7 @@ class QNAPStats(object):
             self._debuglog("Appending access_token (SID: " + self._sid + ") to url")
             data["sid"] = self._sid
 
-        resp = self._session.post(url, data, timeout=TIMEOUT, verify=self._verify_ssl)
+        resp = self._session.post(url, data, timeout=self._timeout, verify=self._verify_ssl)
         return self._handle_response(resp, **kwargs)
 
     def _handle_response(self, resp, force_list=None):
