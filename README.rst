@@ -45,13 +45,15 @@ Device Support
 
 This library has been tested against the following devices and firmwares:
 
-+--------+-----------------------+ 
-| Model  | QTS Firmware Versions |
-+========+=======================+ 
-| TS-451 | 4.2.2, 4.2.3          |
-+--------+-----------------------+ 
-| TS-639 | 4.2.3                 | 
-+--------+-----------------------+ 
++--------+-----------------------+---------------------------------------+
+| Model  | QTS Firmware Versions | Notes                                 |
++========+=======================+=======================================+
+| TS-410 | 4.2.3                 | This device does not report CPU temps |
++--------+-----------------------+---------------------------------------+
+| TS-451 | 4.2.2, 4.2.3          |                                       |
++--------+-----------------------+---------------------------------------+
+| TS-639 | 4.2.3                 |                                       |
++--------+-----------------------+---------------------------------------+
 
 Other devices using these firmwares should probably work fine.
 If you encounter any compatibility issues, please let us know (or better yet, contribute a patch!)
