@@ -5,6 +5,9 @@ python-qnapstats
 .. image:: https://img.shields.io/travis/colinodell/python-qnapstats/master.svg?style=flat-square
    :target: https://travis-ci.org/colinodell/python-qnapstats
    :alt: Build Status
+.. image:: https://img.shields.io/pypi/pyversions/qnapstats.svg?style=flat-square
+   :target: https://pypi.python.org/pypi/qnapstats
+   :alt: Supported Python Versions
 
 Library from obtaining system information from QNAP NAS devices.
 
