@@ -168,9 +168,13 @@ class QNAPStats(object):
             if len(folder_elements) > 0:
                 volumes[key]["folders"] = []
                 for folder in folder_elements:
-                    sharename = folder["sharename"]
-                    used_size = int(folder["used_size"])
-                    volumes[key]["folders"].append({"sharename": sharename, "used_size": used_size})
+                    try:
+                        sharename = folder["sharename"]
+                        used_size = int(folder["used_size"])
+                        volumes[key]["folders"].append({"sharename": sharename, "used_size": used_size})
+                    except Exception as e:
+                        print(e.args)
+                        pass
 
         return volumes
 
