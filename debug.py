@@ -12,25 +12,30 @@ qnap = qnapstats.QNAPStats(host, port, username, password, debugmode=True, verif
 
 try:
     qnap.get_system_stats()
-except:
+except Exception as e:
+    print(e.args)
     traceback.print_exc()
 
 try:
     qnap.get_system_health()
-except:
+except Exception as e:
+    print(e.args)
     traceback.print_exc()
 
 try:
     qnap.get_smart_disk_health()
-except:
+except Exception as e:
+    print(e.args)
     traceback.print_exc()
 
 try:
     qnap.get_volumes()
-except:
+except Exception as e:
+    print(e.args)
     traceback.print_exc()
 
 try:
     qnap.get_bandwidth()
-except:
+except Exception as e:
+    print(e.args)
     traceback.print_exc()
