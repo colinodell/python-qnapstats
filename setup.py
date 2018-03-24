@@ -9,7 +9,7 @@ setup(
     name='qnapstats',
     description='Python API for obtaining QNAP NAS system stats',
     long_description=io.open('README.rst', encoding='utf-8').read(),
-    version='0.2.4',
+    version='0.2.5',
     license='MIT',
     author='Colin O\'Dell',
     author_email='colinodell@gmail.com',
