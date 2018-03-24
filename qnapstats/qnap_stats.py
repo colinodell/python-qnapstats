@@ -174,7 +174,6 @@ class QNAPStats(object):
                         volumes[key]["folders"].append({"sharename": sharename, "used_size": used_size})
                     except Exception as e:
                         print(e.args)
-                        pass
 
         return volumes
 
