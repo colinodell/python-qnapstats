@@ -59,6 +59,8 @@ This library has been tested against the following devices and firmwares:
 +--------+-----------------------+---------------------------------------+
 | TS-639 | 4.2.3                 |                                       |
 +--------+-----------------------+---------------------------------------+
+| TS-659 | 4.2.6                 | May report `None` for some disk temps |
++--------+-----------------------+---------------------------------------+
 
 Other devices using these firmwares should probably work fine.
 If you encounter any compatibility issues, please let us know (or better yet, contribute a patch!)

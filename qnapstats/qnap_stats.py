@@ -190,8 +190,8 @@ class QNAPStats(object):
                 disks[disk["HDNo"]] = {
                     "drive_number": disk["HDNo"],
                     "health": disk["Health"],
-                    "temp_c": int(disk["Temperature"]["oC"]),
-                    "temp_f": int(disk["Temperature"]["oF"]),
+                    "temp_c": int(disk["Temperature"]["oC"]) if disk["Temperature"]["oC"] is not None else None,
+                    "temp_f": int(disk["Temperature"]["oF"]) if disk["Temperature"]["oF"] is not None else None,
                     "capacity": disk["Capacity"],
                     "model": disk["Model"],
                     "serial": disk["Serial"],
