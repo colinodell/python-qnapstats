@@ -5,7 +5,7 @@ import requests
 
 
 # pylint: disable=too-many-instance-attributes
-class QNAPStats(object):
+class QNAPStats:
     """Class containing the main functions."""
 
     # pylint: disable=too-many-arguments
