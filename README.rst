@@ -43,24 +43,28 @@ Usage Example
     pprint(qnap.get_volumes())
     pprint(qnap.get_bandwidth())
 
+**Note:** The user you connect with must be in the admin group.
+
 Device Support
 ==============
 
 This library has been tested against the following devices and firmwares:
 
-+--------+-----------------------+---------------------------------------+
-| Model  | QTS Firmware Versions | Notes                                 |
-+========+=======================+=======================================+
-| TS-110 | 4.2.4                 |                                       |
-+--------+-----------------------+---------------------------------------+
-| TS-410 | 4.2.3                 | This device does not report CPU temps |
-+--------+-----------------------+---------------------------------------+
-| TS-451 | 4.2.2, 4.2.3, 4.2.4   |                                       |
-+--------+-----------------------+---------------------------------------+
-| TS-639 | 4.2.3                 |                                       |
-+--------+-----------------------+---------------------------------------+
-| TS-659 | 4.2.6                 | May report `None` for some disk temps |
-+--------+-----------------------+---------------------------------------+
++---------+-----------------------+---------------------------------------+
+| Model   | QTS Firmware Versions | Notes                                 |
++=========+=======================+=======================================+
+| TS-110  | 4.2.4                 |                                       |
++---------+-----------------------+---------------------------------------+
+| TS-410  | 4.2.3                 | This device does not report CPU temps |
++---------+-----------------------+---------------------------------------+
+| TS-451  | 4.2.2 - 4.2.4         |                                       |
++---------+-----------------------+---------------------------------------+
+| TS-453A | 4.3.4                 |                                       |
++---------+-----------------------+---------------------------------------+
+| TS-639  | 4.2.3                 |                                       |
++---------+-----------------------+---------------------------------------+
+| TS-659  | 4.2.6                 | May report `None` for some disk temps |
++---------+-----------------------+---------------------------------------+
 
-Other devices using these firmwares should probably work fine.
+Other QNAP devices using these firmwares should probably work fine, as should the devices listed above on newer firmwares.
 If you encounter any compatibility issues, please let us know (or better yet, contribute a patch!)
