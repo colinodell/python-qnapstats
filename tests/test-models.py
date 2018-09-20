@@ -71,10 +71,10 @@ def add_mock_responses(rsps, directory):
     if xml is not None:
         rsps.add(responses.GET,
                  'http://localhost:8080/cgi-bin/sys/sysRequest.cgi?subfunc=firm_update&sid=12345',
-				 match_querystring=True,
-				 body=file_get_contents(directory, 'firmwareupdate.xml'),
-				 status=200,
-				 content_type='text/xml')
+                 match_querystring=True,
+                 body=file_get_contents(directory, 'firmwareupdate.xml'),
+                 status=200,
+                 content_type='text/xml')
 
 
 def file_get_contents(directory, file):
