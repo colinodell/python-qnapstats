@@ -295,7 +295,7 @@ class QNAPStats:
         return details
 
     def get_firmware_update(self):
-		"""Get firmware update version if available."""
+        """Get firmware update version if available."""
         resp = self._get_url("sys/sysRequest.cgi?subfunc=firm_update")
         if resp is None:
             return None
