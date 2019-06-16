@@ -1,7 +1,7 @@
 """Module containing multiple classes to obtain QNAP system stats via cgi calls."""
 # -*- coding:utf-8 -*-
-import xmltodict
 import json
+import xmltodict
 import requests
 
 
