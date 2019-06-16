@@ -1,6 +1,7 @@
 """Module containing multiple classes to obtain QNAP system stats via cgi calls."""
 # -*- coding:utf-8 -*-
 import xmltodict
+import json
 import requests
 
 
@@ -106,6 +107,7 @@ class QNAPStats:
         if resp.headers["Content-Type"] != "text/xml":
             # JSON requests not currently supported
             return None
+        self._debuglog("Headers: " + json.dumps(dict(resp.headers)))
         self._debuglog("Response Text: " + resp.text)
         data = xmltodict.parse(resp.content, force_list=force_list)['QDocRoot']
 
