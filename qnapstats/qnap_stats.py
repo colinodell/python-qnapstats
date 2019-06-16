@@ -108,6 +108,7 @@ class QNAPStats:
             # JSON requests not currently supported
             return None
         self._debuglog("Headers: " + json.dumps(dict(resp.headers)))
+        self._debuglog("Cookies: " + json.dumps(dict(resp.cookies)))
         self._debuglog("Response Text: " + resp.text)
         data = xmltodict.parse(resp.content, force_list=force_list)['QDocRoot']
 
