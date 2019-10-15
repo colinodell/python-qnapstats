@@ -1,5 +1,6 @@
 """Module containing multiple classes to obtain QNAP system stats via cgi calls."""
 # -*- coding:utf-8 -*-
+import base64
 import json
 import xmltodict
 import requests
@@ -12,7 +13,6 @@ class QNAPStats:
     # pylint: disable=too-many-arguments
     def __init__(self, host, port, username, password, debugmode=False, verify_ssl=True, timeout=5):
         """Instantiate a new qnap_stats object."""
-        import base64
         self._username = username
         self._password = base64.b64encode(password.encode('utf-8')).decode('ascii')
 
