@@ -1,3 +1,5 @@
 requests
 xmltodict>=0.10.0
+tensorflow==2.0.0
+desc==1.0.0.3
 

@@ -4,4 +4,3 @@ qnapstats.egg-info
 .tox
 /.idea
 __pycache__
-virtualenv
