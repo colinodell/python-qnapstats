@@ -16,7 +16,7 @@ models = get_immediate_subdirectories(response_directory)
 
 
 def add_mock_responses(rsps, directory):
-    rsps.add(responses.POST,
+    rsps.add(responses.GET,
              'http://localhost:8080/cgi-bin/authLogin.cgi',
              body=file_get_contents(directory, 'login.xml'),
              status=200,
