@@ -154,7 +154,7 @@ class QNAPStats:
             }
 
             id_map[key] = label
-            
+
         for vol in resp["volumeList"]["volume"]:
             id_number = vol["volumeDisks"]
 
