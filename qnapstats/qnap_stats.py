@@ -154,9 +154,9 @@ class QNAPStats:
             }
 
             id_map[key] = label
-
-        for vol in resp["volumeUseList"]["volumeUse"]:
-            id_number = vol["volumeValue"]
+            
+        for vol in resp["volumeList"]["volume"]:
+            id_number = vol["volumeDisks"]
 
             # Skip any system reserved volumes
             if id_number not in id_map.keys():
