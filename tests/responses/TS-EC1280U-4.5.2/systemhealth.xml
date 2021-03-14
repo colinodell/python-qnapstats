@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<QDocRoot version="1.0">
+<authPassed><![CDATA[1]]></authPassed><model><modelName><![CDATA[TS-X80U]]></modelName><internalModelName><![CDATA[TS-X80]]></internalModelName><platform><![CDATA[TS-NASX86]]></platform><platform_ex><![CDATA[X86_HASWELL]]></platform_ex><customModelName><![CDATA[]]></customModelName><displayModelName><![CDATA[TS-EC1280U]]></displayModelName><sas_model><![CDATA[0]]></sas_model><storage_v2>1</storage_v2>
+<encryptfsSupported><![CDATA[1]]></encryptfsSupported><is_zfs><![CDATA[0]]></is_zfs><node><![CDATA[]]></node><dual_node><![CDATA[]]></dual_node></model>
+<firmware><version><![CDATA[4.5.2]]></version><number><![CDATA[1594]]></number><build><![CDATA[20210302]]></build><patch><![CDATA[0]]></patch><buildTime><![CDATA[2021/03/02]]></buildTime></firmware>
+<rfs_bits><![CDATA[64]]></rfs_bits><specVersion><![CDATA[1.0]]></specVersion><hostname><![CDATA[NAS04282D]]></hostname><DemoSiteSuppurt><![CDATA[no]]></DemoSiteSuppurt><customLogo><customFrontLogo><![CDATA[]]></customFrontLogo><customLoginLogo><![CDATA[]]></customLoginLogo></customLogo>
+<func><name><![CDATA[S_MENU_40]]></name><ownContent><sysHealth><status><![CDATA[good]]></status></sysHealth>
+<needProcessEvent></needProcessEvent>
+</ownContent>
+</func>
+</QDocRoot>
