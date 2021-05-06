@@ -54,7 +54,6 @@ class QNAPStats:
 
     def _login(self):
         """Log into QNAP and obtain a session id."""
-
         data = {"user": self._username, "pwd": self._password}
         result = self._execute_post_url("authLogin.cgi", data, False)
 
