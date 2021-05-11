@@ -16,12 +16,17 @@ models = get_immediate_subdirectories(response_directory)
 
 
 def add_mock_responses(rsps, directory):
-    rsps.add(responses.GET,
+    rsps.add(responses.POST,
              'http://localhost:8080/cgi-bin/authLogin.cgi',
              body=file_get_contents(directory, 'login.xml'),
              status=200,
              content_type='text/xml')
-
+    if file_get_contents(directory, "login_with_get.xml"):
+        rsps.add(responses.GET,
+                 'http://localhost:8080/cgi-bin/authLogin.cgi?user=admin&pwd=correcthorsebatterystaple',
+                 body=file_get_contents(directory, 'login_with_get.xml'),
+                 status=200,
+                 content_type='text/xml')
     xml = file_get_contents(directory, 'bandwidth.xml')
     if xml is not None:
         rsps.add(responses.GET,
