@@ -59,7 +59,7 @@ class QNAPStats:
 
         if result is None or not result.get("authSid"):
             # Another method to login
-            suffix_url = f"authLogin.cgi?user={self._username}&pwd={self._password}"
+            suffix_url = "authLogin.cgi?user=" + self._username + "&pwd=" + self._password
             result = self._execute_get_url(suffix_url, False)
 
         if result is None:
