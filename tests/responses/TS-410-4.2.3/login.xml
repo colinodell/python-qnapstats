@@ -6,6 +6,7 @@
     <mediaReady><![CDATA[1]]></mediaReady>
     <SMBFW><![CDATA[0]]></SMBFW>
     <authPassed><![CDATA[1]]></authPassed>
+    <authSid><![CDATA[12345]]></authSid>
     <isAdmin><![CDATA[1]]></isAdmin>
     <username><![CDATA[admin]]></username>
     <groupname><![CDATA[administrators]]></groupname>
