@@ -65,9 +65,7 @@ class QNAPStats:
         if result is None:
             return False
 
-        authSid = result["authSid"]
-
-        self._sid = authSid
+        self._sid = result["authSid"]
 
         return True
 
