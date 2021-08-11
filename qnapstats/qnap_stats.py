@@ -57,10 +57,16 @@ class QNAPStats:
         data = {"user": self._username, "pwd": self._password}
         result = self._execute_post_url("authLogin.cgi", data, False)
 
+        if result is None or not result.get("authSid"):
+            # Another method to login
+            suffix_url = "authLogin.cgi?user=" + self._username + "&pwd=" + self._password
+            result = self._execute_get_url(suffix_url, False)
+
         if result is None:
             return False
 
         self._sid = result["authSid"]
+
         return True
 
     def _get_url(self, url, retry_on_error=True, **kwargs):
@@ -112,7 +118,7 @@ class QNAPStats:
         self._debuglog("Response Text: " + resp.text)
         data = xmltodict.parse(resp.content, force_list=force_list)['QDocRoot']
 
-        auth_passed = data['authPassed']
+        auth_passed = data.get('authPassed')
         if auth_passed is not None and len(auth_passed) == 1 and auth_passed == "0":
             self._session_error = True
             return None

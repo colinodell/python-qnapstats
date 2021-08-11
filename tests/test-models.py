@@ -1,5 +1,6 @@
 """Functional tests where the QNAP responses are mocked"""
 # -*- coding:utf-8 -*-
+import base64
 import json
 import os
 import qnapstats
@@ -21,7 +22,13 @@ def add_mock_responses(rsps, directory):
              body=file_get_contents(directory, 'login.xml'),
              status=200,
              content_type='text/xml')
-
+    if file_get_contents(directory, "login_with_get.xml"):
+        pwd = base64.b64encode("correcthorsebatterystaple".encode('utf-8')).decode('ascii')
+        rsps.add(responses.GET,
+                 'http://localhost:8080/cgi-bin/authLogin.cgi?user=admin&pwd=' + pwd,
+                 body=file_get_contents(directory, 'login_with_get.xml'),
+                 status=200,
+                 content_type='text/xml')
     xml = file_get_contents(directory, 'bandwidth.xml')
     if xml is not None:
         rsps.add(responses.GET,
