@@ -311,10 +311,10 @@ class QNAPStats:
             interfaceIds = []
             if bandwidth_info["eth_index_list"]:
                 for num in bandwidth_info["eth_index_list"].split(','):
-                    interfaceIds.append(f"eth{num}")
+                    interfaceIds.append("eth" + num)
             if bandwidth_info["wlan_index_list"]:
                 for num in bandwidth_info["wlan_index_list"].split(','):
-                    interfaceIds.append(f"wlan{num}")
+                    interfaceIds.append("wlan" + num)
             for interfaceId in interfaceIds:
                 interface = bandwidth_info[interfaceId]
                 interface["id"] = interfaceId
