@@ -1,0 +1,40 @@
+name: Test
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - python-version: '3.4'
+            toxenv: py34
+          - python-version: '3.5'
+            toxenv: py35
+          - python-version: '3.6'
+            toxenv: py36
+          - python-version: '3.7'
+            toxenv: py37
+          - python-version: '3.7'
+            toxenv: desc
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install tox tox-gh-actions
+
+    - name: Test with tox
+      env:
+        TOXENV: ${{ matrix.toxenv }}
+      run: tox
