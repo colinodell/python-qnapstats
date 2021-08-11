@@ -291,17 +291,37 @@ class QNAPStats:
         if resp is None:
             return None
 
+        if (not hasattr(resp, "bandwidth_info")):
+            # changes in API since QTS 4.5.4, old query returns no values
+            resp = self._get_url("management/chartReq.cgi?chart_func=bandwidth")
+
         details = {}
+        interfaces = []
+        bandwidth_info = resp["bandwidth_info"]
 
-        default = resp["bandwidth_info"]["df_gateway"]
+        default = resp.get("df_gateway") or bandwidth_info.get("df_gateway")
 
-        for item in resp["bandwidth_info"]["item"]:
-            interface = item["id"]
-            details[interface] = {
-                "name": item["name"],
+        if (hasattr(bandwidth_info, "item")):
+            interfaces.extend(bandwidth_info["item"])
+        else:
+            interfaceIds = []
+            if (bandwidth_info["eth_index_list"]):
+                for num in bandwidth_info["eth_index_list"].split(','):
+                    interfaceIds.append(f"eth{num}")
+            if (bandwidth_info["wlan_index_list"]):
+                for num in bandwidth_info["wlan_index_list"].split(','):
+                    interfaceIds.append(f"wlan{num}")
+            for interfaceId in interfaceIds:
+                interface = bandwidth_info[interfaceId]
+                interface["id"] = interfaceId
+                interfaces.extend([interface])
+
+        for item in interfaces:
+            details[item["id"]] = {
+                "name": item["dname"] or item["name"],
                 "rx": round(int(item["rx"]) / 5),
                 "tx": round(int(item["tx"]) / 5),
-                "is_default": interface == default
+                "is_default": item["id"] == default
             }
 
         return details
