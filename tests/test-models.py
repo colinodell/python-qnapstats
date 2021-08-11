@@ -38,6 +38,15 @@ def add_mock_responses(rsps, directory):
                  status=200,
                  content_type='text/xml')
 
+    xml = file_get_contents(directory, 'bandwidth2.xml')
+    if xml is not None:
+        rsps.add(responses.GET,
+                 'http://localhost:8080/cgi-bin/management/chartReq.cgi?chart_func=bandwidth&sid=12345',
+                 match_querystring=True,
+                 body=xml,
+                 status=200,
+                 content_type='text/xml')
+
     xml = file_get_contents(directory, 'systemhealth.xml')
     if xml is not None:
         rsps.add(responses.GET,
@@ -100,7 +109,7 @@ for model_directory in models:
 
         bandwidth = file_get_contents(model_directory, 'bandwidth.json')
         if bandwidth is not None:
-            assert json.dumps(qnap.get_bandwidth(), sort_keys=True) == bandwidth
+            assert json.dumps(qnap.get_bandwidth(), sort_keys=True) == bandwidth.rstrip()
 
         smartdiskhealth = file_get_contents(model_directory, 'smartdiskhealth.json')
         if smartdiskhealth is not None:

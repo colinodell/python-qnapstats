@@ -91,6 +91,8 @@ This library has been tested against the following devices and firmwares:
 +--------------+-----------------------+---------------------------------------+
 | TS-EC1280U   | 4.5.2                 |                                       |
 +--------------+-----------------------+---------------------------------------+
+| TS-X53       | 4.5.4                 |                                       |
++--------------+-----------------------+---------------------------------------+
 
 Other QNAP devices using these firmwares should probably work fine, as should the devices listed above on newer firmwares.
 If you encounter any compatibility issues, please let us know (or better yet, contribute a patch!)
