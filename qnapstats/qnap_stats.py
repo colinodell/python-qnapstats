@@ -285,13 +285,13 @@ class QNAPStats:
         """Obtain the current bandwidth usage speeds."""
         resp = self._get_url(
             "management/chartReq.cgi?chart_func=QSM40bandwidth",
-            force_list=("item")
+            force_list="item"
         )
 
         if resp is None:
             return None
 
-        if (not hasattr(resp, "bandwidth_info")):
+        if "bandwidth_info" not in resp:
             # changes in API since QTS 4.5.4, old query returns no values
             resp = self._get_url("management/chartReq.cgi?chart_func=bandwidth")
 
@@ -301,14 +301,14 @@ class QNAPStats:
 
         default = resp.get("df_gateway") or bandwidth_info.get("df_gateway")
 
-        if (hasattr(bandwidth_info, "item")):
+        if "item" in bandwidth_info:
             interfaces.extend(bandwidth_info["item"])
         else:
             interfaceIds = []
-            if (bandwidth_info["eth_index_list"]):
+            if bandwidth_info["eth_index_list"]:
                 for num in bandwidth_info["eth_index_list"].split(','):
                     interfaceIds.append(f"eth{num}")
-            if (bandwidth_info["wlan_index_list"]):
+            if bandwidth_info["wlan_index_list"]:
                 for num in bandwidth_info["wlan_index_list"].split(','):
                     interfaceIds.append(f"wlan{num}")
             for interfaceId in interfaceIds:
