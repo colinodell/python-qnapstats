@@ -1,1 +1,1 @@
-{"eth0": {"is_default": true, "name": "Adapter 1", "rx": 3157, "tx": 656}, "eth1": {"is_default": false, "name": "Adapter 2", "rx": 0, "tx": 0}}
+{"eth0": {"is_default": true, "name": "Adapter 1", "rx": 15785, "tx": 3279}, "eth1": {"is_default": false, "name": "Adapter 2", "rx": 0, "tx": 0}}
