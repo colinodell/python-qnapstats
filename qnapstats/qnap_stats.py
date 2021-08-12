@@ -288,16 +288,12 @@ class QNAPStats:
             force_list="item"
         )
 
+        if resp and "bandwidth_info" not in resp:
+            # changes in API since QTS 4.5.4, old query returns no values
+            resp = self._get_url("management/chartReq.cgi?chart_func=bandwidth")
+
         if resp is None:
             return None
-
-        if "bandwidth_info" not in resp:
-            # changes in API since QTS 4.5.4, old query returns no values
-            try:
-                resp = self._get_url("management/chartReq.cgi?chart_func=bandwidth")
-            except requests.exceptions.RequestException:
-                # no bandwidth_info and no new API means no way to return any results
-                return None
 
         details = {}
         interfaces = []
