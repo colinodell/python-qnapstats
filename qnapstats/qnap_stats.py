@@ -276,8 +276,10 @@ class QNAPStats:
                 "err_packets": int(root["err_packet" + i])
             }
 
-        for dns in root["dnsInfo"]["DNS_LIST"]:
-            details["dns"].append(dns)
+        dnsInfo = root.get("dnsInfo")
+        if dnsInfo:
+            for dns in dnsInfo["DNS_LIST"]:
+                details["dns"].append(dns)
 
         return details
 
