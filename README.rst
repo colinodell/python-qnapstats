@@ -43,7 +43,9 @@ Usage Example
     pprint(qnap.get_volumes())
     pprint(qnap.get_bandwidth())
 
-**Note:** The user you connect with must be in the admin group.
+**Note:** The user you connect with must be in the admin group. It doesn't necessarily
+need to be THE "administrator" account, but you do need to use some account in the
+administrators group.
 
 Device Support
 ==============
