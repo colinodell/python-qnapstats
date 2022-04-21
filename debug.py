@@ -39,3 +39,16 @@ try:
 except Exception as e:
     print(e.args)
     traceback.print_exc()
+
+try:
+    qnap.get_external_drive()
+except Exception as e:
+    print(e.args)
+    traceback.print_exc()
+
+
+try:
+    qnap.get_strorage_information_on_external_device()
+except Exception as e:
+    print(e.args)
+    traceback.print_exc()

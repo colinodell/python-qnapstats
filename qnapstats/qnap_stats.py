@@ -28,7 +28,7 @@ class QNAPStats:
         self._verify_ssl = verify_ssl
         self._timeout = timeout
 
-        self._base_url = '%s:%s/cgi-bin/' % (host, port)
+        self._base_url = f"{host}:{port}/cgi-bin/"
 
     def _debuglog(self, message):
         """Output message if debug mode is enabled."""
@@ -87,7 +87,7 @@ class QNAPStats:
 
         if append_sid:
             self._debuglog("Appending access_token (SID: " + self._sid + ") to url")
-            url = "%s&sid=%s" % (url, self._sid)
+            url = f"{url}&sid={self._sid}"
 
         resp = self._session.get(url, timeout=self._timeout, verify=self._verify_ssl)
         return self._handle_response(resp, **kwargs)
@@ -168,7 +168,7 @@ class QNAPStats:
             id_number = vol["volumeValue"]
 
             # Skip any system reserved volumes
-            if id_number not in id_map.keys():
+            if id_number not in id_map:
                 continue
 
             key = id_map[id_number]
@@ -339,3 +339,29 @@ class QNAPStats:
             return None
 
         return new_version
+
+    def list_external_drive(self):
+        """List External drive connected on qnap."""
+        data = {"func": "getExternalDev"}
+        resp = self._execute_post_url("devices/devRequest.cgi", data=data)
+        if resp is None:
+            return None
+
+        external_drives = resp.get("func", {}).get("ownContent", {}).get("externalDevice")
+        if external_drives is None or len(external_drives) == 0:
+            return None
+
+        return external_drives
+
+    def get_strorage_information_on_external_device(self):
+        """Get informations on volumes in External drive connected on qnap."""
+        data = {"func": "external_get_all"}
+        resp = self._execute_post_url("disk/disk_manage.cgi", data=data)
+        if resp is None:
+            return None
+
+        disk_vol = resp.get("Disk_Vol")
+        if disk_vol is None or len(disk_vol) == 0:
+            return None
+
+        return disk_vol
