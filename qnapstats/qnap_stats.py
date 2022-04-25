@@ -353,7 +353,7 @@ class QNAPStats:
 
         return external_drives
 
-    def get_strorage_information_on_external_device(self):
+    def get_storage_information_on_external_device(self):
         """Get informations on volumes in External drive connected on qnap."""
         data = {"func": "external_get_all"}
         resp = self._execute_post_url("disk/disk_manage.cgi", data=data)

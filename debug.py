@@ -48,7 +48,7 @@ except Exception as e:
 
 
 try:
-    qnap.get_strorage_information_on_external_device()
+    qnap.get_storage_information_on_external_device()
 except Exception as e:
     print(e.args)
     traceback.print_exc()
