@@ -1,0 +1,33 @@
+# For release build - release that - Github action tag and deploy it on Google Cloud Storage
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        with:
+          # Token is used to push on main branch
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Semantic Release
+        id: semantic
+        uses: cycjimmy/semantic-release-action@v2.6.0
+        with:
+          semantic_version: 17.3.7
+          extra_plugins: |
+            @semantic-release/commit-analyzer@8.0.1
+            @semantic-release/release-notes-generator@9.0.1
+            @semantic-release/changelog@5.0.1
+            @semantic-release/github@7.2.0
+            @semantic-release/exec@5.0.0
+            @semantic-release/git@9.0.0
