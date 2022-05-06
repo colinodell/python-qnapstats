@@ -1,7 +1,7 @@
 {
     "tagFormat": "${version}",
     "branches": [
-        "main"
+        "master"
     ],
     "repositoryUrl": "https://github.com/colinodell/python-qnapstats.git",
     "plugins": [
