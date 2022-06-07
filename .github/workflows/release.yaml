@@ -31,3 +31,5 @@ jobs:
             @semantic-release/github@7.2.0
             @semantic-release/exec@5.0.0
             @semantic-release/git@9.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
