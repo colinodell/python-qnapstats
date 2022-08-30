@@ -28,7 +28,7 @@ class QNAPStats:
         self._verify_ssl = verify_ssl
         self._timeout = timeout
 
-        self._base_url = f"{host}:{port}/cgi-bin/"
+        self._base_url = f"{host}:{port}/"
 
     def _debuglog(self, message):
         """Output message if debug mode is enabled."""
@@ -80,9 +80,21 @@ class QNAPStats:
 
         return result
 
-    def _execute_get_url(self, url, append_sid=True, **kwargs):
+    def _post_url(self, url, data, retry_on_error=True, **kwargs):
+        """High-level function to make POST requests."""
+        # Always ensure that we have a valid session
+        self._init_session()
+
+        result = self._execute_post_url(url, data, **kwargs)
+        if (self._session_error or result is None) and retry_on_error:
+            self._debuglog("Error occured during POST request, retrying...")
+            self._post_url(url, data, False, **kwargs)
+
+        return result
+
+    def _execute_get_url(self, url, append_sid=True, cgi_bin_request=True, **kwargs):
         """Low-level function to execute a GET request."""
-        url = self._base_url + url
+        url = self._base_url + ('cgi-bin/' if cgi_bin_request else '') + url
         self._debuglog("GET from URL: " + url)
 
         if append_sid:
@@ -92,9 +104,9 @@ class QNAPStats:
         resp = self._session.get(url, timeout=self._timeout, verify=self._verify_ssl)
         return self._handle_response(resp, **kwargs)
 
-    def _execute_post_url(self, url, data, append_sid=True, **kwargs):
+    def _execute_post_url(self, url, data, append_sid=True, cgi_bin_request=True, **kwargs):
         """Low-level function to execute a POST request."""
-        url = self._base_url + url
+        url = self._base_url + ('cgi-bin/' if cgi_bin_request else '') + url
         self._debuglog("POST to URL: " + url)
 
         if append_sid:
@@ -110,20 +122,30 @@ class QNAPStats:
         if resp.status_code != 200:
             return None
 
-        if resp.headers["Content-Type"] != "text/xml":
-            # JSON requests not currently supported
-            return None
+        # Save the content type
+        response_content_type = resp.headers["Content-Type"]
+
         self._debuglog("Headers: " + json.dumps(dict(resp.headers)))
         self._debuglog("Cookies: " + json.dumps(dict(resp.cookies)))
         self._debuglog("Response Text: " + resp.text)
-        data = xmltodict.parse(resp.content, force_list=force_list)['QDocRoot']
+        self._debuglog("Response Content Type: " + response_content_type)
 
-        auth_passed = data.get('authPassed')
-        if auth_passed is not None and len(auth_passed) == 1 and auth_passed == "0":
-            self._session_error = True
-            return None
+        if response_content_type == "application/json":
+            # Return the parsed json response
+            data = resp.json()
+            return data
+        if response_content_type == 'text/xml':
+            data = xmltodict.parse(resp.content, force_list=force_list)['QDocRoot']
 
-        return data
+            auth_passed = data.get('authPassed')
+            if auth_passed is not None and len(auth_passed) == 1 and auth_passed == "0":
+                self._session_error = True
+                return None
+
+            return data
+
+        self._debuglog(f"Response type {response_content_type} not supported yet!")
+        return None
 
     def get_system_health(self):
         """Obtain the system's overall health."""
@@ -343,7 +365,7 @@ class QNAPStats:
     def list_external_drive(self):
         """List External drive connected on qnap."""
         data = {"func": "getExternalDev"}
-        resp = self._execute_post_url("devices/devRequest.cgi", data=data)
+        resp = self._post_url("devices/devRequest.cgi", data=data)
         if resp is None:
             return None
 
@@ -356,7 +378,7 @@ class QNAPStats:
     def get_storage_information_on_external_device(self):
         """Get informations on volumes in External drive connected on qnap."""
         data = {"func": "external_get_all"}
-        resp = self._execute_post_url("disk/disk_manage.cgi", data=data)
+        resp = self._post_url("disk/disk_manage.cgi", data=data)
         if resp is None:
             return None
 
@@ -365,3 +387,12 @@ class QNAPStats:
             return None
 
         return disk_vol
+
+    def get_download_station_status(self):
+        """Get overall status of the Download Station activities."""
+        data = {"from": "0", "limit": "50", "type": "all", "status": "all"}
+        resp = self._post_url("downloadstation/V4/Task/Query", data=data, cgi_bin_request=False)
+        if resp:
+            return resp['status']
+
+        return None
