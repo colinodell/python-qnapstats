@@ -42,6 +42,7 @@ Usage Example
     pprint(qnap.get_smart_disk_health())
     pprint(qnap.get_volumes())
     pprint(qnap.get_bandwidth())
+    pprint(qnap.get_download_station_status())
 
 **Note:** The user you connect with must be in the admin group. It doesn't necessarily
 need to be THE "administrator" account, but you do need to use some account in the
@@ -100,6 +101,8 @@ This library has been tested against the following devices and firmwares:
 | TS-EC1280U   | 4.5.2                 |                                       |
 +--------------+-----------------------+---------------------------------------+
 | TS-X53       | 4.5.4                 |                                       |
++--------------+-----------------------+---------------------------------------+
+| TS-231+      | 5.0.0                 |                                       |
 +--------------+-----------------------+---------------------------------------+
 
 Other QNAP devices using these firmwares should probably work fine, as should the devices listed above on newer firmwares.
