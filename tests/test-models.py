@@ -92,6 +92,14 @@ def add_mock_responses(rsps, directory):
                  status=200,
                  content_type='text/xml')
 
+    json_resp = file_get_contents(directory, 'downloadstationstatus.json')
+    if json_resp is not None:
+        rsps.add(responses.POST,
+                 'http://localhost:8080/downloadstation/V4/Task/Query',
+                 body=json_resp,
+                 status=200,
+                 content_type='application/json')
+
 
 def file_get_contents(directory, file):
     file = os.path.join(response_directory, directory, file)
@@ -130,3 +138,10 @@ for model_directory in models:
         firmwareupdate = file_get_contents(model_directory, 'firmwareupdate.json')
         if firmwareupdate is not None:
             assert json.dumps(qnap.get_firmware_update(), sort_keys=True) == firmwareupdate
+
+        downloadstationstatus = file_get_contents(model_directory, 'downloadstationstatus.json')
+        if downloadstationstatus is not None:
+            # We need to extract only the `status` object from the whole response object
+            loaded_json = json.loads(downloadstationstatus)['status']
+            assert json.dumps(qnap.get_download_station_status(), sort_keys=True) == \
+                json.dumps(loaded_json, sort_keys=True)
