@@ -52,3 +52,10 @@ try:
 except Exception as e:
     print(e.args)
     traceback.print_exc()
+
+
+try:
+    qnap.get_download_station_status()
+except Exception as e:
+    print(e.args)
+    traceback.print_exc()
