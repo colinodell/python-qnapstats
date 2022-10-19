@@ -334,7 +334,8 @@ class QNAPStats:
         if resp is None:
             return None
 
-        new_version = resp["func"]["ownContent"]["newVersion"]
+        new_version = None
+        try: new_version = resp["func"]["ownContent"]["newVersion"]
         if new_version is None or len(new_version) == 0:
             return None
 
