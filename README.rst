@@ -45,7 +45,7 @@ Usage Example
 
 **Note:** The user you connect with must be in the admin group. It doesn't necessarily
 need to be THE "administrator" account, but you do need to use some account in the
-administrators group.
+administrators group.  MFA must also be disabled for that user for this library to work.
 
 Device Support
 ==============
@@ -83,9 +83,9 @@ This library has been tested against the following devices and firmwares:
 +--------------+-----------------------+---------------------------------------+
 | TS-451       | 4.2.2 - 4.2.4         |                                       |
 +--------------+-----------------------+---------------------------------------+
-| TS-453A      | 4.3.4                 |                                       |
+| TS-453A      | 4.3.4; 5.0.1          |                                       |
 +--------------+-----------------------+---------------------------------------+
-| TS-453Be     | 4.2.3                 |                                       |
+| TS-453Be     | 4.2.3; 5.0.1          |                                       |
 +--------------+-----------------------+---------------------------------------+
 | TS-639       | 4.2.3                 |                                       |
 +--------------+-----------------------+---------------------------------------+
@@ -101,6 +101,13 @@ This library has been tested against the following devices and firmwares:
 +--------------+-----------------------+---------------------------------------+
 | TS-X53       | 4.5.4                 |                                       |
 +--------------+-----------------------+---------------------------------------+
+| TVS-1282     | 5.0.1                 |                                       |
++--------------+-----------------------+---------------------------------------+
 
 Other QNAP devices using these firmwares should probably work fine, as should the devices listed above on newer firmwares.
 If you encounter any compatibility issues, please let us know (or better yet, contribute a patch!)
+
+
+**Upgrading to QTS 5?** Make sure the account you connect with meets the criteria listed earlier in this README.
+Also be sure to log into your NAS and complete any agreements, warnings, wizards, etc. that may prevent this
+library from using the QNAP API.
