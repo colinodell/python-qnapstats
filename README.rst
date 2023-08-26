@@ -2,7 +2,7 @@
 python-qnapstats
 ================
 
-.. image:: https://img.shields.io/github/workflow/status/colinodell/python-qnapstats/Test/master.svg?style=flat-square
+.. image:: https://img.shields.io/github/actions/workflow/status/colinodell/python-qnapstats/test.yml?branch=master&?style=flat-square
    :target: https://github.com/colinodell/python-qnapstats/actions?query=workflow%3ATest+branch%3Amaster
    :alt: Build Status
 .. image:: https://img.shields.io/pypi/pyversions/qnapstats.svg?style=flat-square
