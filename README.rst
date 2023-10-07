@@ -118,7 +118,7 @@ This library has been tested against the following devices and firmwares:
 | TVS-1282     | 5.0.1                  |                                       |
 +--------------+------------------------+---------------------------------------+
 
-⚠️ *QuTS is not currently supported - see [issue #84](https://github.com/colinodell/python-qnapstats/issues/84)
+⚠️ *QuTS is not currently supported - see [issue #84](https://github.com/colinodell/python-qnapstats/issues/84)*
 
 Other QNAP devices using these QTS firmwares should probably work fine, as should the devices listed above on newer firmwares.
 If you encounter any compatibility issues, please let us know (or better yet, contribute a patch!)

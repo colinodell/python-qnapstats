@@ -39,4 +39,4 @@ jobs:
     - name: Test with tox
       env:
         TOXENV: ${{ matrix.toxenv }}
-      run: tox
+      run: tox -v

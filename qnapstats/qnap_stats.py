@@ -191,7 +191,7 @@ class QNAPStats:
 
     def get_smart_disk_health(self):
         """Obtain SMART information about each disk."""
-        resp = self._get_url("disk/qsmart.cgi?func=all_hd_data", force_list=("entry"))
+        resp = self._get_url("disk/qsmart.cgi?func=all_hd_data", force_list="entry")
 
         if resp is None:
             return None
