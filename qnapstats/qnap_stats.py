@@ -50,7 +50,6 @@ class QNAPStats:
             if self._login() is False:
                 self._session_error = True
                 self._debuglog("Login failed, unable to process request")
-                return
 
     def _login(self):
         """Log into QNAP and obtain a session id."""
@@ -91,6 +90,17 @@ class QNAPStats:
 
         resp = self._session.get(url, timeout=self._timeout, verify=self._verify_ssl)
         return self._handle_response(resp, **kwargs)
+
+    def _post_url(self, url, data, retry_on_error=False, **kwargs):
+        """High-level function for making POST requests."""
+        self._init_session()
+
+        result = self._execute_post_url(url, data, **kwargs)
+        if (self._session_error or result is None) and retry_on_error:
+            self._debuglog("Error occured, retrying...")
+            self._get_url(url, False, **kwargs)
+
+        return result
 
     def _execute_post_url(self, url, data, append_sid=True, **kwargs):
         """Low-level function to execute a POST request."""
@@ -365,3 +375,17 @@ class QNAPStats:
             return None
 
         return disk_vol
+
+    def put_in_sleep_mode(self):
+        """Put the qnap in sleep mode."""
+        data = {
+            "subfunc": "power_mgmt",
+            "apply": "s3",
+        }
+        # It is expected to end in read timeout
+        try:
+            resp = self._post_url("sys/sysRequest.cgi", data=data)
+        except requests.exceptions.ReadTimeout:
+            return None
+
+        return resp
