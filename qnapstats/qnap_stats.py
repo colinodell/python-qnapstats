@@ -257,6 +257,7 @@ class QNAPStats:
             },
             "nics": {},
             "dns": [],
+            "sysfans": {},
         }
 
         nic_count = int(root["nic_cnt"])
@@ -275,6 +276,17 @@ class QNAPStats:
                 "tx_packets": int(root["tx_packet" + i]),
                 "err_packets": int(root["err_packet" + i])
             }
+            
+        sysfan_count = int(root["sysfan_count"])
+        for sysfan_index in range(sysfan_count):
+            i = str(sysfan_index + 1)
+            sysfan = "sysfan" + str(sysfan_index)
+            details["sysfans"][sysfan] = {
+                "speed": int(root["sysfan" + i]),
+                "stat": int(root["sysfan" + i + "_stat"]),
+                "fail": int(root["sysfan_fail" + i ])
+            }
+        
 
         dnsInfo = root.get("dnsInfo")
         if dnsInfo:
