@@ -283,8 +283,7 @@ class QNAPStats:
             sysfan = "sysfan" + str(sysfan_index)
             details["sysfans"][sysfan] = {
                 "speed": int(root["sysfan" + i]),
-                "stat": int(root["sysfan" + i + "_stat"]),
-                "fail": int(root["sysfan_fail" + i ])
+                "status": "alert" if int(root["sysfan" + i + "_stat"]) == -1 else "ok"
             }
         
 
