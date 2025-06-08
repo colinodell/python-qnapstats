@@ -43,9 +43,21 @@ Usage Example
     pprint(qnap.get_volumes())
     pprint(qnap.get_bandwidth())
 
-**Note:** The user you connect with must be in the admin group. It doesn't necessarily
-need to be THE "administrator" account, but you do need to use some account in the
-administrators group.  MFA must also be disabled for that user for this library to work.
+Account
+=======
+The account you connect with must have system monitoring permissions. The simplest
+option is to put it in the admin group; it doesn't necessarily
+need to be THE "administrator" account, but you can use some account in the
+administrators group.
+
+Alternatively you can configure a normal account and enable Delegated Administration
+in control panel, and activate "System Monitoring."
+
+Once the account is created, and/or you upgrade to a newer of like QTS 5, 
+blso be sure to log into your NAS and complete any agreements, warnings, wizards, etc.
+that may prevent this library from using the QNAP API.
+
+MFA/2FA must also be disabled for that user for this library to work.
 
 Device Support
 ==============
