@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/colinodell/python-qnapstats/compare/0.5.0...0.6.0) (2025-06-25)
+
+
+### Features
+
+* adding system fan monitoring ([#98](https://github.com/colinodell/python-qnapstats/issues/98)) ([e9254ee](https://github.com/colinodell/python-qnapstats/commit/e9254eec25f72802d17a34f09a47c1f80039f8fd))
+
 # [0.5.0](https://github.com/colinodell/python-qnapstats/compare/0.4.0...0.5.0) (2022-06-07)
 
 
