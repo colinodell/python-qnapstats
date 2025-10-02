@@ -4,6 +4,7 @@ import base64
 import json
 import os
 import qnapstats
+import requests
 import responses
 
 
@@ -92,13 +93,19 @@ def add_mock_responses(rsps, directory):
                  status=200,
                  content_type='text/xml')
 
+    # Sleep mode succeeds but fails in timeout
+    rsps.add(responses.POST,
+             'http://localhost:8080/cgi-bin/sys/sysRequest.cgi',
+             body=requests.exceptions.ReadTimeout(),
+             content_type='text/xml')
+
 
 def file_get_contents(directory, file):
     file = os.path.join(response_directory, directory, file)
     if not os.path.exists(file):
         return None
 
-    with open(file, 'r') as myfile:
+    with open(file, 'r', encoding='utf-8') as myfile:
         return myfile.read()
 
 
@@ -130,3 +137,5 @@ for model_directory in models:
         firmwareupdate = file_get_contents(model_directory, 'firmwareupdate.json')
         if firmwareupdate is not None:
             assert json.dumps(qnap.get_firmware_update(), sort_keys=True) == firmwareupdate
+
+        assert qnap.put_in_sleep_mode() is None
