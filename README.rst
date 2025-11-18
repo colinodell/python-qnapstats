@@ -54,7 +54,7 @@ Alternatively you can configure a normal account and enable Delegated Administra
 in control panel, and activate "System Monitoring."
 
 Once the account is created, and/or you upgrade to a newer of like QTS 5, 
-blso be sure to log into your NAS and complete any agreements, warnings, wizards, etc.
+also be sure to log into your NAS and complete any agreements, warnings, wizards, etc.
 that may prevent this library from using the QNAP API.
 
 MFA/2FA must also be disabled for that user for this library to work.
@@ -108,6 +108,8 @@ This library has been tested against the following devices and firmwares:
 | TS-453A          | 4.3.4; 5.0.1           |                                        |
 +------------------+------------------------+----------------------------------------+
 | TS-453Be         | 4.2.3; 5.0.1           |                                        |
++------------------+------------------------+----------------------------------------+
+| TS-464           | 5.2.7                  | User-reported: no automated tests      |
 +------------------+------------------------+----------------------------------------+
 | TS-639           | 4.2.3                  |                                        |
 +------------------+------------------------+----------------------------------------+
