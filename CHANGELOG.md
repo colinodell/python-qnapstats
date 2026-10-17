@@ -1,3 +1,10 @@
+## [0.6.2](https://github.com/colinodell/python-qnapstats/compare/0.6.1...0.6.2) (2026-10-17)
+
+
+### Bug Fixes
+
+* return the retried response when a GET request is retried ([7eec477](https://github.com/colinodell/python-qnapstats/commit/7eec477aa97e9dd178095ec79f246f1a965e60b9))
+
 ## [0.6.1](https://github.com/colinodell/python-qnapstats/compare/0.6.0...0.6.1) (2026-10-17)
 
 ### Bug Fixes
