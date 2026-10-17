@@ -299,7 +299,7 @@ class QNAPStats:
             force_list="item"
         )
 
-        if resp and "bandwidth_info" not in resp:
+        if not resp or "bandwidth_info" not in resp:
             # changes in API since QTS 4.5.4, old query returns no values
             resp = self._get_url("management/chartReq.cgi?chart_func=bandwidth")
 
