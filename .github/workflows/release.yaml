@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
         with:
           # Token is used to push on main branch
           submodules: true  # Fetch Hugo themes (true OR recursive)
