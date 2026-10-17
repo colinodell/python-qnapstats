@@ -14,6 +14,9 @@ setup(
     author='Colin O\'Dell',
     author_email='colinodell@gmail.com',
     url='https://github.com/colinodell/python-qnapstats',
+    project_urls={
+        'Changelog': 'https://github.com/colinodell/python-qnapstats/blob/master/CHANGELOG.md',
+    },
     packages=['qnapstats'],
     keywords=['qnap'],
     python_requires='>=3.7',
