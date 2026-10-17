@@ -3,6 +3,7 @@
 import base64
 import json
 import os
+import re
 from unittest.mock import call, patch
 import qnapstats
 import responses
@@ -103,6 +104,32 @@ def file_get_contents(directory, file):
         return myfile.read()
 
 
+# Missing NIC fields must not prevent other interfaces from being returned.
+nic_fields = (
+    "eth_status", "eth_max_speed", "eth_ip", "eth_mask", "eth_mac",
+    "eth_usage", "rx_packet", "tx_packet", "err_packet",
+)
+missing_nic_directory = 'TS-EC1280U-4.5.2-missing-nic'
+for missing_field in nic_fields:
+    qnap = qnapstats.QNAPStats("localhost", 8080, "admin", "correcthorsebatterystaple")
+    with responses.RequestsMock(assert_all_requests_are_fired=False) as rsps:
+        add_mock_responses(rsps, missing_nic_directory)
+        # Leave an incomplete interface in the middle, as well as the absent
+        # seventh interface, to check that later complete interfaces survive.
+        xml = file_get_contents(missing_nic_directory, 'systemstats.xml')
+        xml = re.sub(r"<" + missing_field + r"3>.*?</" + missing_field + r"3>", "", xml)
+        rsps.replace(responses.GET,
+                     'http://localhost:8080/cgi-bin/management/manaRequest.cgi'
+                     '?subfunc=sysinfo&hd=no&multicpu=1&sid=12345',
+                     match_querystring=True,
+                     body=xml,
+                     status=200,
+                     content_type='text/xml')
+        expected = json.loads(file_get_contents(missing_nic_directory, 'systemstats.json'))
+        del expected["nics"]["eth2"]
+        assert qnap.get_system_stats() == expected
+
+
 primary_call = call("management/chartReq.cgi?chart_func=QSM40bandwidth", force_list="item")
 fallback_call = call("management/chartReq.cgi?chart_func=bandwidth")
 bandwidth_response = {
@@ -161,7 +188,7 @@ for model_directory in models:
 
         systemstats = file_get_contents(model_directory, 'systemstats.json')
         if systemstats is not None:
-            assert json.dumps(qnap.get_system_stats(), sort_keys=True) == systemstats
+            assert json.dumps(qnap.get_system_stats(), sort_keys=True) == systemstats.rstrip()
 
         volumes = file_get_contents(model_directory, 'volumes.json')
         if volumes is not None:

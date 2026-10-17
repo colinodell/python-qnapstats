@@ -259,9 +259,16 @@ class QNAPStats:
             "sysfans": {},
         }
 
+        nic_fields = (
+            "eth_status", "eth_max_speed", "eth_ip", "eth_mask", "eth_mac",
+            "eth_usage", "rx_packet", "tx_packet", "err_packet",
+        )
         nic_count = int(root["nic_cnt"])
         for nic_index in range(nic_count):
             i = str(nic_index + 1)
+            # Some models report more NICs than they provide data for.
+            if not all(field + i in root for field in nic_fields):
+                continue
             interface = "eth" + str(nic_index)
             status = root["eth_status" + i]
             details["nics"][interface] = {
