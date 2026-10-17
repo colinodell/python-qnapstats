@@ -5,16 +5,25 @@ on:
   push:
     branches:
       - master
+  # Recovery path for a release that was tagged but never made it to PyPI
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to publish to PyPI
+        required: true
 
 jobs:
-  build:
+  release:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
       contents: write
       issues: write
       pull-requests: write
-      id-token: write  # PyPI trusted publishing
+    outputs:
+      published: ${{ steps.semantic.outputs.new_release_published }}
+      version: ${{ steps.semantic.outputs.new_release_version }}
 
     steps:
       - name: Checkout sources
@@ -39,19 +48,32 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Releases created with GITHUB_TOKEN don't trigger other workflows, so publish from here
+  # Separate job so a failed upload can be retried with "Re-run failed jobs".
+  # Releases created with GITHUB_TOKEN don't trigger other workflows, so this can't live in its own workflow.
+  publish:
+    needs: release
+    if: ${{ !cancelled() && (needs.release.outputs.published == 'true' || github.event_name == 'workflow_dispatch') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write  # PyPI trusted publishing
+
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || needs.release.outputs.version }}
+
       - name: Set up Python
-        if: steps.semantic.outputs.new_release_published == 'true'
         uses: actions/setup-python@v7
         with:
           python-version: "3.x"
 
       - name: Build a binary wheel and a source tarball
-        if: steps.semantic.outputs.new_release_published == 'true'
         run: |
           python -m pip install build
           python -m build --sdist --wheel --outdir dist/
 
       - name: Publish distribution to PyPI
-        if: steps.semantic.outputs.new_release_published == 'true'
         uses: pypa/gh-action-pypi-publish@release/v1
