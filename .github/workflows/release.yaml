@@ -10,6 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write  # PyPI trusted publishing
 
     steps:
       - name: Checkout sources
@@ -50,5 +55,3 @@ jobs:
       - name: Publish distribution to PyPI
         if: steps.semantic.outputs.new_release_published == 'true'
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
