@@ -6,28 +6,36 @@ on:
 
 jobs:
   build:
-    # As long as we need Python 3.6 here in the test, we can only use up to Ubuntu 20.
-    # https://github.com/actions/setup-python/issues/544
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         include:
-          - python-version: '3.6'
-            toxenv: py36
           - python-version: '3.7'
             toxenv: py37
           - python-version: '3.8'
             toxenv: py38
           - python-version: '3.9'
             toxenv: py39
+          - python-version: '3.10'
+            toxenv: py310
+          - python-version: '3.11'
+            toxenv: py311
+          - python-version: '3.12'
+            toxenv: py312
+          - python-version: '3.13'
+            toxenv: py313
+          - python-version: '3.14'
+            toxenv: py314
+          - python-version: '3.15'
+            toxenv: py315
           - python-version: '3.9'
             toxenv: desc
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v7
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
 

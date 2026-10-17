@@ -4,6 +4,7 @@ import base64
 import json
 import os
 import re
+from unittest.mock import call, patch
 import qnapstats
 import responses
 
@@ -127,6 +128,45 @@ for missing_field in nic_fields:
         expected = json.loads(file_get_contents(missing_nic_directory, 'systemstats.json'))
         del expected["nics"]["eth2"]
         assert qnap.get_system_stats() == expected
+
+
+primary_call = call("management/chartReq.cgi?chart_func=QSM40bandwidth", force_list="item")
+fallback_call = call("management/chartReq.cgi?chart_func=bandwidth")
+bandwidth_response = {
+    "bandwidth_info": {
+        "df_gateway": "eth0",
+        "eth_index_list": "0,1,2,3,4,5",
+        "wlan_index_list": None,
+    }
+}
+expected_bandwidth = {}
+for index in range(6):
+    interface_id = "eth" + str(index)
+    bandwidth_response["bandwidth_info"][interface_id] = {
+        "name": interface_id,
+        "rx": str(500 * (index + 1)),
+        "tx": str(250 * (index + 1)),
+    }
+    expected_bandwidth[interface_id] = {
+        "name": interface_id,
+        "rx": 100 * (index + 1),
+        "tx": 50 * (index + 1),
+        "is_default": index == 0,
+    }
+
+qnap = qnapstats.QNAPStats("localhost", 8080, "admin", "correcthorsebatterystaple")
+for primary_response in (None, {}, {"model": "TVS-1677X"}):
+    with patch.object(qnap, "_get_url", side_effect=[primary_response, bandwidth_response]) as get_url:
+        assert qnap.get_bandwidth() == expected_bandwidth
+        assert get_url.call_args_list == [primary_call, fallback_call]
+
+with patch.object(qnap, "_get_url", return_value=bandwidth_response) as get_url:
+    assert qnap.get_bandwidth() == expected_bandwidth
+    assert get_url.call_args_list == [primary_call]
+
+with patch.object(qnap, "_get_url", return_value=None) as get_url:
+    assert qnap.get_bandwidth() is None
+    assert get_url.call_args_list == [primary_call, fallback_call]
 
 
 for model_directory in models:

@@ -4,4 +4,4 @@ disable=I
 max-args=6
 
 [MESSAGES CONTROL]
-disable=line-too-long,len-as-condition,broad-except,invalid-name
+disable=line-too-long,len-as-condition,broad-except,invalid-name,unknown-option-value
