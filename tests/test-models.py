@@ -104,6 +104,19 @@ def file_get_contents(directory, file):
         return myfile.read()
 
 
+# A successful retry must return the retried response, not the failed first attempt.
+qnap = qnapstats.QNAPStats("localhost", 8080, "admin", "correcthorsebatterystaple")
+with patch.object(qnap, "_init_session"), \
+        patch.object(qnap, "_execute_get_url", side_effect=[None, {"ok": "1"}]) as execute_get_url:
+    assert qnap._get_url("some/url.cgi") == {"ok": "1"}
+    assert execute_get_url.call_count == 2
+
+with patch.object(qnap, "_init_session"), \
+        patch.object(qnap, "_execute_get_url", return_value=None) as execute_get_url:
+    assert qnap._get_url("some/url.cgi") is None
+    assert execute_get_url.call_count == 2
+
+
 # Missing NIC fields must not prevent other interfaces from being returned.
 nic_fields = (
     "eth_status", "eth_max_speed", "eth_ip", "eth_mask", "eth_mac",

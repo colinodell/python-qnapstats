@@ -75,7 +75,7 @@ class QNAPStats:
         result = self._execute_get_url(url, **kwargs)
         if (self._session_error or result is None) and retry_on_error:
             self._debuglog("Error occured, retrying...")
-            self._get_url(url, False, **kwargs)
+            return self._get_url(url, False, **kwargs)
 
         return result
 
