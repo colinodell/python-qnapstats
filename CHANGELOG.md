@@ -1,3 +1,10 @@
+## [0.6.1](https://github.com/colinodell/python-qnapstats/compare/0.6.0...0.6.1) (2026-10-17)
+
+
+### Bug Fixes
+
+* skip incomplete NIC entries in system stats ([52de985](https://github.com/colinodell/python-qnapstats/commit/52de985958827fa3eb366674c73fe926f5efb325))
+
 # [0.6.0](https://github.com/colinodell/python-qnapstats/compare/0.5.0...0.6.0) (2025-06-25)
 
 
