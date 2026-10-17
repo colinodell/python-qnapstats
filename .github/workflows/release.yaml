@@ -33,3 +33,22 @@ jobs:
             @semantic-release/git@9.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Releases created with GITHUB_TOKEN don't trigger other workflows, so publish from here
+      - name: Set up Python
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+
+      - name: Build a binary wheel and a source tarball
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          python -m pip install build
+          python -m build --sdist --wheel --outdir dist/
+
+      - name: Publish distribution to PyPI
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}

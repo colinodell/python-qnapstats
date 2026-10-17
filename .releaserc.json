@@ -6,14 +6,20 @@
     "repositoryUrl": "https://github.com/colinodell/python-qnapstats.git",
     "plugins": [
         "@semantic-release/commit-analyzer",
-        "@semantic-release/exec",
+        [
+            "@semantic-release/exec",
+            {
+                "prepareCmd": "sed -i \"s/version='[^']*'/version='${nextRelease.version}'/\" setup.py"
+            }
+        ],
         "@semantic-release/release-notes-generator",
         "@semantic-release/changelog",
         [
             "@semantic-release/git",
             {
                 "assets": [
-                    "CHANGELOG.md"
+                    "CHANGELOG.md",
+                    "setup.py"
                 ],
                 "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
             }
