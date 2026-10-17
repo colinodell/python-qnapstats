@@ -6,14 +6,10 @@ on:
 
 jobs:
   build:
-    # As long as we need Python 3.6 here in the test, we can only use up to Ubuntu 20.
-    # https://github.com/actions/setup-python/issues/544
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         include:
-          - python-version: '3.6'
-            toxenv: py36
           - python-version: '3.7'
             toxenv: py37
           - python-version: '3.8'
