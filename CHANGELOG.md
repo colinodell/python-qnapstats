@@ -1,9 +1,19 @@
 ## [0.6.1](https://github.com/colinodell/python-qnapstats/compare/0.6.0...0.6.1) (2026-10-17)
 
-
 ### Bug Fixes
 
-* skip incomplete NIC entries in system stats ([52de985](https://github.com/colinodell/python-qnapstats/commit/52de985958827fa3eb366674c73fe926f5efb325))
+* skip incomplete NIC entries in system stats ([#110](https://github.com/colinodell/python-qnapstats/issues/110)) ([52de985](https://github.com/colinodell/python-qnapstats/commit/52de985958827fa3eb366674c73fe926f5efb325))
+* fix KeyError when sys_tempc/sys_tempf are missing from system stats ([#109](https://github.com/colinodell/python-qnapstats/issues/109))
+* fall back to the legacy bandwidth API when QSM40bandwidth returns no data ([#112](https://github.com/colinodell/python-qnapstats/issues/112))
+
+### Python Support
+
+* drop Python 3.5 and 3.6; `python_requires` is now `>=3.7` ([#113](https://github.com/colinodell/python-qnapstats/issues/113))
+* test against Python 3.10 through 3.15 ([#113](https://github.com/colinodell/python-qnapstats/issues/113))
+
+### Documentation
+
+* add TS-464 and TS-439 Pro II+ to supported models ([#102](https://github.com/colinodell/python-qnapstats/issues/102), [#105](https://github.com/colinodell/python-qnapstats/issues/105))
 
 # [0.6.0](https://github.com/colinodell/python-qnapstats/compare/0.5.0...0.6.0) (2025-06-25)
 
