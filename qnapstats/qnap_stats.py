@@ -229,8 +229,8 @@ class QNAPStats:
                 "name": root["server_name"],
                 "model": resp["model"]["displayModelName"],
                 "serial_number": root["serial_number"],
-                "temp_c": int(root["sys_tempc"]),
-                "temp_f": int(root["sys_tempf"]),
+                "temp_c": int(root["sys_tempc"]) if "sys_tempc" in root else None,
+                "temp_f": int(root["sys_tempf"]) if "sys_tempf" in root else None,
                 "timezone": root["timezone"],
             },
             "firmware": {
