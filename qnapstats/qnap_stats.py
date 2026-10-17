@@ -10,7 +10,7 @@ import requests
 class QNAPStats:
     """Class containing the main functions."""
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,too-many-positional-arguments
     def __init__(self, host, port, username, password, debugmode=False, verify_ssl=True, timeout=5):
         """Instantiate a new qnap_stats object."""
         self._username = username
@@ -50,7 +50,6 @@ class QNAPStats:
             if self._login() is False:
                 self._session_error = True
                 self._debuglog("Login failed, unable to process request")
-                return
 
     def _login(self):
         """Log into QNAP and obtain a session id."""
@@ -276,7 +275,7 @@ class QNAPStats:
                 "tx_packets": int(root["tx_packet" + i]),
                 "err_packets": int(root["err_packet" + i])
             }
-            
+
         sysfan_count = int(root["sysfan_count"])
         for sysfan_index in range(sysfan_count):
             i = str(sysfan_index + 1)
@@ -285,7 +284,6 @@ class QNAPStats:
                 "speed": int(root["sysfan" + i]),
                 "status": "alert" if int(root["sysfan" + i + "_stat"]) == -1 else "ok"
             }
-        
 
         dnsInfo = root.get("dnsInfo")
         if dnsInfo:
